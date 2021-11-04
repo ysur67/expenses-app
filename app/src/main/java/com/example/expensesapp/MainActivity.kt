@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val registerButton = findViewById<Button>(R.id.registerButton)
         registerButton.setOnClickListener {
-            val result = viewModel.register("yse", "asdffsd")
+            val result = viewModel.register("dfds@fdsfd.com", "asdffsd")
             result.observe(this, {
                 when (it) {
                     is RequestState.Loading -> {

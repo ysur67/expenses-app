@@ -5,18 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.repositories.MockUserRepo
+import com.example.data.repositories.FirebaseUserRepository
 import com.example.domain.models.Result
 import com.example.domain.params.RegisterUserParam
 import com.example.domain.usecases.LoginUserUseCase
 import com.example.domain.usecases.RegisterUserUseCase
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
-class UserViewModel(
-//    private val registerUseCase: RegisterUserUseCase,
-//    private val loginUseCase: LoginUserUseCase
-) : ViewModel() {
-    private val userRepo = MockUserRepo()
+class UserViewModel : ViewModel() {
+    private val userRepo = FirebaseUserRepository(firebase = FirebaseAuth.getInstance())
     private val registerUseCase = RegisterUserUseCase(userRepo)
 
     private val _currentUser: MutableLiveData<User> = MutableLiveData(null)

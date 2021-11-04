@@ -1,3 +1,3 @@
 package com.example.data.models
 
-data class MockUser(val email: String, val password: String)
+data class MockUser(val username: String, val password: String)
