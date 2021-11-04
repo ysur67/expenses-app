@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.models.Result
+import com.example.domain.models.User
 import com.example.domain.params.LoginUserParam
 import com.example.domain.params.RegisterUserParam
 import com.example.domain.usecases.LoginUserUseCase
 import com.example.domain.usecases.RegisterUserUseCase
-import com.example.expensesapp.models.User
 import com.example.expensesapp.utils.RequestState
 import kotlinx.coroutines.launch
 
@@ -27,7 +27,7 @@ class UserViewModel constructor(
         viewModelScope.launch {
             when(val result = registerUseCase.execute(RegisterUserParam(email, password))) {
                 is Result.Success -> {
-                    requestState.postValue(RequestState.Success(result.data.toModel()))
+                    requestState.postValue(RequestState.Success(result.data))
                 }
                 is Result.Error -> {
                     requestState.postValue(RequestState.Error(result.exception))
@@ -42,7 +42,7 @@ class UserViewModel constructor(
         viewModelScope.launch {
             when(val result = loginUseCase.execute(LoginUserParam(email, password))) {
                 is Result.Success -> {
-                    requestState.postValue(RequestState.Success(result.data.toModel()))
+                    requestState.postValue(RequestState.Success(result.data))
                 }
                 is Result.Error -> {
                     requestState.postValue(RequestState.Error(result.exception))
@@ -51,8 +51,4 @@ class UserViewModel constructor(
         }
         return requestState
     }
-}
-
-fun com.example.domain.models.User.toModel() : User {
-    return User(this.email)
 }
