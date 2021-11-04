@@ -14,11 +14,10 @@ import com.example.domain.usecases.RegisterUserUseCase
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
-class UserViewModel : ViewModel() {
-    private val userRepo = FirebaseUserRepository(firebase = FirebaseAuth.getInstance())
-    private val registerUseCase = RegisterUserUseCase(userRepo)
-    private val loginUseCase = LoginUserUseCase(userRepo)
-
+class UserViewModel constructor(
+    val registerUseCase: RegisterUserUseCase,
+    val loginUseCase: LoginUserUseCase
+) : ViewModel() {
     private val _currentUser: MutableLiveData<User> = MutableLiveData(null)
     val user: LiveData<User>
         get() = _currentUser

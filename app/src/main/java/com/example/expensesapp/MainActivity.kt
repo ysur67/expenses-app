@@ -1,21 +1,20 @@
 package com.example.expensesapp
 
-import android.app.DownloadManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.activity.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: UserViewModel by viewModels()
+    val userViewModel: UserViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val registerButton = findViewById<Button>(R.id.registerButton)
         registerButton.setOnClickListener {
-            val result = viewModel.register("dfds@fdsfd.com", "asdffsd")
+            val result = userViewModel.register("dfds@fdsfd.com", "asdffsd")
             result.observe(this, {
                 when (it) {
                     is RequestState.Loading -> {
