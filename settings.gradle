@@ -9,3 +9,4 @@ dependencyResolutionManagement {
 rootProject.name = "ExpensesApp"
 include ':app'
 include ':domain'
+include ':data'
