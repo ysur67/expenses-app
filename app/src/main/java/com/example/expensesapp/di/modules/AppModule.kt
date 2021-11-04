@@ -4,7 +4,7 @@ import com.example.data.repositories.FirebaseUserRepository
 import com.example.domain.UserRepository
 import com.example.domain.usecases.LoginUserUseCase
 import com.example.domain.usecases.RegisterUserUseCase
-import com.example.expensesapp.UserViewModel
+import com.example.expensesapp.domain.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

@@ -1,6 +1,5 @@
-package com.example.expensesapp
+package com.example.expensesapp.utils
 
-import android.app.DownloadManager
 import java.lang.Exception
 
 sealed class RequestState<out T> {

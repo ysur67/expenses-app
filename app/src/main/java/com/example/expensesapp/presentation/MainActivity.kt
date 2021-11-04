@@ -1,9 +1,12 @@
-package com.example.expensesapp
+package com.example.expensesapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import com.example.expensesapp.R
+import com.example.expensesapp.domain.UserViewModel
+import com.example.expensesapp.utils.RequestState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
