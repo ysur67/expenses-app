@@ -1,24 +1,22 @@
-package com.example.expensesapp
+package com.example.expensesapp.domain
 
-import android.app.DownloadManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.data.repositories.FirebaseUserRepository
 import com.example.domain.models.Result
 import com.example.domain.params.LoginUserParam
 import com.example.domain.params.RegisterUserParam
 import com.example.domain.usecases.LoginUserUseCase
 import com.example.domain.usecases.RegisterUserUseCase
-import com.google.firebase.auth.FirebaseAuth
+import com.example.expensesapp.models.User
+import com.example.expensesapp.utils.RequestState
 import kotlinx.coroutines.launch
 
-class UserViewModel : ViewModel() {
-    private val userRepo = FirebaseUserRepository(firebase = FirebaseAuth.getInstance())
-    private val registerUseCase = RegisterUserUseCase(userRepo)
-    private val loginUseCase = LoginUserUseCase(userRepo)
-
+class UserViewModel constructor(
+    val registerUseCase: RegisterUserUseCase,
+    val loginUseCase: LoginUserUseCase
+) : ViewModel() {
     private val _currentUser: MutableLiveData<User> = MutableLiveData(null)
     val user: LiveData<User>
         get() = _currentUser
