@@ -14,8 +14,8 @@ import com.example.expensesapp.utils.RequestState
 import kotlinx.coroutines.launch
 
 class UserViewModel constructor(
-    val registerUseCase: RegisterUserUseCase,
-    val loginUseCase: LoginUserUseCase
+    private val registerUseCase: RegisterUserUseCase,
+    private val loginUseCase: LoginUserUseCase
 ) : ViewModel() {
     private val _currentUser: MutableLiveData<User> = MutableLiveData(null)
     val user: LiveData<User>
