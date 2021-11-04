@@ -7,7 +7,7 @@ abstract class BaseForm {
     protected val errors: HashMap<EditText, String> = HashMap()
     val isValid = errors.size == 0
 
-    fun validate() {
+    open fun validate() {
         fields.forEach {
             if (it.text.isNullOrBlank()) {
                 errors[it] = "This field can't be empty"

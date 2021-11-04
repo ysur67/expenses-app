@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.expensesapp.R
 import com.example.expensesapp.databinding.FragmentRegisterBinding
+import com.example.expensesapp.domain.UserViewModel
+import com.example.expensesapp.presentation.forms.RegisterForm
+import com.example.expensesapp.utils.RequestState
+import com.example.expensesapp.utils.displaySnack
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -18,12 +22,44 @@ class RegisterFragment : Fragment() {
     private val binding: FragmentRegisterBinding
         get() = _binding!!
 
+    val userViewModel: UserViewModel by viewModel()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.registerButton.setOnClickListener {
+            val form = RegisterForm(
+                binding.editEmail,
+                binding.editPassword,
+                binding.editPasswordRepeat
+            )
+            form.validate()
+            if (!form.isValid) {
+                form.displayErrors()
+                return@setOnClickListener
+            }
+            val result = userViewModel.register(form.email, form.password)
+            result.observe(viewLifecycleOwner, {
+                when(it) {
+                    is RequestState.Loading -> {
+                        displaySnack("Loading")
+                    }
+                    is RequestState.Error -> {
+                        displaySnack("Error: ${it.exception}")
+                    }
+                    is RequestState.Success -> {
+                        displaySnack("Success")
+                    }
+                }
+            })
+        }
     }
 
     companion object {
