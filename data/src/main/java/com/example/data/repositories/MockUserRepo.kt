@@ -9,11 +9,11 @@ import kotlin.coroutines.*
 class MockUserRepo : UserRepository {
     override suspend fun Register(email: String, password: String): Result<User> {
         delay(5000L)
-        return Result.Success(User(email, password))
+        return Result.Success(User(email))
     }
 
     override suspend fun Login(email: String, password: String): Result<User> {
-        return Result.Success(User(email, password))
+        return Result.Success(User(email))
     }
 }
 

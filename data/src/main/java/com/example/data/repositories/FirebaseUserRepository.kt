@@ -31,7 +31,6 @@ class FirebaseUserRepository(
 
 fun AuthResult.toModel() : User {
     return User(
-        email = user?.email!!,
-        password = user?.email!!
+        email = user?.email!!
     )
 }
