@@ -5,23 +5,17 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.example.expensesapp.R
-import com.example.expensesapp.presentation.fragments.LoginFragment
-import java.lang.IllegalStateException
 
-class ErrorOccurredFragment(
-    private val message: String
-) : DialogFragment() {
-
+class ErrorOccurredFragment(private val message: String) : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
-            val builder = AlertDialog.Builder(it)
-            builder.setTitle(R.string.an_error_occurred)
-                .setMessage(message)
-                .setPositiveButton("ok") {
-                    dialog, id -> dialog.cancel()
-                }
-            builder.create()
-        } ?: throw IllegalStateException("asdf")
+        val activity = requireActivity()
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle(R.string.an_error_occurred)
+            .setMessage(message)
+            .setPositiveButton("Ok") { dialog, _ ->
+                dialog.cancel()
+            }
+        return builder.create()
     }
 
     companion object {
