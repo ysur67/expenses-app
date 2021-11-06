@@ -1,17 +1,29 @@
 package com.example.expensesapp.presentation.fragments
 
+import android.app.DownloadManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.allViews
+import androidx.core.view.forEach
 import com.example.domain.models.Result
+import com.example.domain.models.User
 import com.example.expensesapp.databinding.FragmentLoginBinding
 import com.example.expensesapp.domain.UserViewModel
 import com.example.expensesapp.presentation.forms.LoginForm
 import com.example.expensesapp.utils.RequestState
 import com.example.expensesapp.utils.displaySnack
+import com.google.firebase.FirebaseApiNotAvailableException
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.FirebaseTooManyRequestsException
+import com.google.firebase.auth.FirebaseAuthEmailException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 
 /**
@@ -46,15 +58,9 @@ class LoginFragment : Fragment() {
             val result = userViewModel.login(form.login, form.password)
             result.observe(viewLifecycleOwner, {
                 when(it) {
-                    is RequestState.Loading -> {
-                        displaySnack("loading")
-                    }
-                    is RequestState.Error -> {
-                        displaySnack("error: ${it.exception}")
-                    }
-                    is RequestState.Success -> {
-                        displaySnack("Success")
-                    }
+                    is RequestState.Success -> onSuccess(it.data)
+                    is RequestState.Loading -> onLoading()
+                    is RequestState.Error -> onError(it.exception)
                 }
             })
         }
@@ -63,6 +69,28 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun onSuccess(user: User) {
+        displaySnack("Success, ${user.email}")
+    }
+
+    private fun onLoading() {
+        toggleLoadingFragment(true)
+    }
+
+    private fun onError(err: Exception) {
+        toggleLoadingFragment(false)
+        displaySnack(err.toString())
+    }
+
+    private fun toggleLoadingFragment(isActive: Boolean) {
+        binding.loadingFragment.root.forEach {
+            it.visibility = if (isActive) View.VISIBLE else View.GONE
+        }
+        binding.root.allViews.forEach {
+            it.isEnabled = isActive.not()
+        }
     }
 
     companion object {
