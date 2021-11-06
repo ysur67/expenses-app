@@ -10,7 +10,7 @@ import kotlinx.coroutines.tasks.await
 class FirebaseUserRepository(
     private val firebase: FirebaseAuth
 ) : UserRepository {
-    override suspend fun Register(email: String, password: String): Result<User> {
+    override suspend fun register(email: String, password: String): Result<User> {
         return try {
             val result = firebase.createUserWithEmailAndPassword(email, password).await()
             Result.Success(result.toModel())
@@ -19,7 +19,7 @@ class FirebaseUserRepository(
         }
     }
 
-    override suspend fun Login(email: String, password: String): Result<User> {
+    override suspend fun login(email: String, password: String): Result<User> {
         return try {
             val result = firebase.signInWithEmailAndPassword(email, password).await()
             Result.Success(result.toModel())

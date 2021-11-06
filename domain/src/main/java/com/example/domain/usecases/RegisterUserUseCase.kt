@@ -7,6 +7,6 @@ import com.example.domain.params.RegisterUserParam
 
 class RegisterUserUseCase(private val repo: UserRepository) {
     suspend fun execute(params: RegisterUserParam) : Result<User> {
-        return repo.Register(params.email, params.password)
+        return repo.register(params.email, params.password)
     }
 }

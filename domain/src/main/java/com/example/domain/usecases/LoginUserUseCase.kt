@@ -7,6 +7,6 @@ import com.example.domain.params.LoginUserParam
 
 class LoginUserUseCase(private val repo: UserRepository) {
     suspend fun execute(params: LoginUserParam) : Result<User> {
-        return repo.Login(params.username, params.password)
+        return repo.login(params.username, params.password)
     }
 }
