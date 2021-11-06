@@ -7,9 +7,9 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 
-class FirebaseUserRepository(
-    private val firebase: FirebaseAuth
-) : UserRepository {
+class FirebaseUserRepository : UserRepository {
+    private val firebase: FirebaseAuth = FirebaseAuth.getInstance()
+
     override val isAuthenticated: Boolean
         get() = firebase.currentUser != null
 

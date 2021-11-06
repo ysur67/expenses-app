@@ -7,13 +7,12 @@ import com.example.domain.UserRepository
 import com.example.domain.usecases.*
 import com.example.expensesapp.domain.ExpenseViewModel
 import com.example.expensesapp.domain.UserViewModel
-import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     fun provideUserRepository() : UserRepository {
-        return FirebaseUserRepository(FirebaseAuth.getInstance())
+        return FirebaseUserRepository()
     }
     fun provideExpenseRepository() : ExpenseRepository {
         return FirebaseExpenseRepository()
