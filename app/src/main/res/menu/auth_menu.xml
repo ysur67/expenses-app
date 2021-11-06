@@ -7,5 +7,5 @@
         android:title="@string/login" />
     <item
         android:id="@id/registerFragment"
-        android:title="@string/password" />
+        android:title="@string/register" />
 </menu>
