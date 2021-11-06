@@ -13,6 +13,7 @@ import com.example.domain.models.User
 import com.example.expensesapp.databinding.FragmentLoginBinding
 import com.example.expensesapp.domain.UserViewModel
 import com.example.expensesapp.presentation.forms.LoginForm
+import com.example.expensesapp.presentation.fragments.utils.ErrorOccurredFragment
 import com.example.expensesapp.utils.RequestState
 import com.example.expensesapp.utils.displaySnack
 import com.google.firebase.FirebaseApiNotAvailableException
@@ -81,7 +82,10 @@ class LoginFragment : Fragment() {
 
     private fun onError(err: Exception) {
         toggleLoadingFragment(false)
-        displaySnack(err.toString())
+        val errorDialog = ErrorOccurredFragment.newInstance(err.message.toString())
+        val manager = requireActivity().supportFragmentManager
+        val transaction = manager.beginTransaction()
+        errorDialog.show(transaction, "dialog")
     }
 
     private fun toggleLoadingFragment(isActive: Boolean) {
@@ -101,6 +105,6 @@ class LoginFragment : Fragment() {
          * @return A new instance of fragment LoginFragment.
          */
         @JvmStatic
-        fun newInstance(param1: String, param2: String) = LoginFragment()
+        fun newInstance() = LoginFragment()
     }
 }
