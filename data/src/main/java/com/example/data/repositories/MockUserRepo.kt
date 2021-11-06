@@ -7,6 +7,9 @@ import kotlinx.coroutines.delay
 import kotlin.coroutines.*
 
 class MockUserRepo : UserRepository {
+    override val isAuthenticated: Boolean
+        get() = true
+
     override suspend fun register(email: String, password: String): Result<User> {
         delay(5000L)
         return Result.Success(User(email))

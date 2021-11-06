@@ -2,6 +2,7 @@ package com.example.expensesapp.di.modules
 
 import com.example.data.repositories.FirebaseUserRepository
 import com.example.domain.UserRepository
+import com.example.domain.usecases.CheckIfUserIsAuthenticatedUseCase
 import com.example.domain.usecases.LoginUserUseCase
 import com.example.domain.usecases.RegisterUserUseCase
 import com.example.expensesapp.domain.UserViewModel
@@ -16,5 +17,10 @@ val appModule = module {
     single { provideUserRepository() }
     factory { RegisterUserUseCase(repo = get()) }
     factory { LoginUserUseCase(repo = get()) }
-    viewModel { UserViewModel(loginUseCase = get(), registerUseCase = get()) }
+    factory { CheckIfUserIsAuthenticatedUseCase(repo = get()) }
+    viewModel { UserViewModel(
+        loginUseCase = get(),
+        registerUseCase = get(),
+        isAuthenticatedUseCase = get()
+    ) }
 }

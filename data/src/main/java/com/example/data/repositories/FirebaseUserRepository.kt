@@ -10,6 +10,9 @@ import kotlinx.coroutines.tasks.await
 class FirebaseUserRepository(
     private val firebase: FirebaseAuth
 ) : UserRepository {
+    override val isAuthenticated: Boolean
+        get() = firebase.currentUser != null
+
     override suspend fun register(email: String, password: String): Result<User> {
         return try {
             val result = firebase.createUserWithEmailAndPassword(email, password).await()

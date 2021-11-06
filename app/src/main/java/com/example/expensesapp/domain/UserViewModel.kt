@@ -8,6 +8,7 @@ import com.example.domain.models.Result
 import com.example.domain.models.User
 import com.example.domain.params.LoginUserParam
 import com.example.domain.params.RegisterUserParam
+import com.example.domain.usecases.CheckIfUserIsAuthenticatedUseCase
 import com.example.domain.usecases.LoginUserUseCase
 import com.example.domain.usecases.RegisterUserUseCase
 import com.example.expensesapp.utils.RequestState
@@ -15,11 +16,11 @@ import kotlinx.coroutines.launch
 
 class UserViewModel constructor(
     private val registerUseCase: RegisterUserUseCase,
-    private val loginUseCase: LoginUserUseCase
+    private val loginUseCase: LoginUserUseCase,
+    private val isAuthenticatedUseCase: CheckIfUserIsAuthenticatedUseCase
 ) : ViewModel() {
-    private val _currentUser: MutableLiveData<User> = MutableLiveData(null)
-    val user: LiveData<User>
-        get() = _currentUser
+    private val _isAuthenticated = MutableLiveData(isAuthenticatedUseCase.execute())
+    val isAuthenticated: LiveData<Boolean> = _isAuthenticated
 
     fun register(email: String, password: String) : LiveData<RequestState<User>> {
         val requestState = MutableLiveData<RequestState<User>>()
@@ -28,6 +29,7 @@ class UserViewModel constructor(
             when(val result = registerUseCase.execute(RegisterUserParam(email, password))) {
                 is Result.Success -> {
                     requestState.postValue(RequestState.Success(result.data))
+                    _isAuthenticated.postValue(isAuthenticatedUseCase.execute())
                 }
                 is Result.Error -> {
                     requestState.postValue(RequestState.Error(result.exception))
@@ -36,6 +38,7 @@ class UserViewModel constructor(
         }
         return requestState
     }
+
     fun login(email: String, password: String) : LiveData<RequestState<User>> {
         val requestState = MutableLiveData<RequestState<User>>()
         requestState.postValue(RequestState.Loading())
@@ -48,6 +51,7 @@ class UserViewModel constructor(
                     requestState.postValue(RequestState.Error(result.exception))
                 }
             }
+            _isAuthenticated.postValue(isAuthenticatedUseCase.execute())
         }
         return requestState
     }
