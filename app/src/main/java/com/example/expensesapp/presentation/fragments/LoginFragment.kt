@@ -73,6 +73,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun onSuccess(user: User) {
+        toggleLoadingFragment(false)
         displaySnack("Success, ${user.email}")
     }
 
