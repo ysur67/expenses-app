@@ -1,5 +1,6 @@
 package com.example.expensesapp.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.findNavController
@@ -23,7 +24,10 @@ class AuthActivity : AppCompatActivity() {
             if (it != true) {
                 return@observe
             }
-
+            Intent(this, MainActivity::class.java).apply {
+                startActivity(this)
+            }
+            finish()
         })
     }
 }
