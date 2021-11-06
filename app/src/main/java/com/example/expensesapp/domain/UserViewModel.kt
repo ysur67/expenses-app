@@ -46,6 +46,7 @@ class UserViewModel constructor(
             when(val result = loginUseCase.execute(LoginUserParam(email, password))) {
                 is Result.Success -> {
                     requestState.postValue(RequestState.Success(result.data))
+                    _isAuthenticated.postValue(isAuthenticatedUseCase.execute())
                 }
                 is Result.Error -> {
                     requestState.postValue(RequestState.Error(result.exception))
