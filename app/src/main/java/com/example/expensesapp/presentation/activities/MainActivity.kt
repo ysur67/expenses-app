@@ -1,4 +1,4 @@
-package com.example.expensesapp.presentation
+package com.example.expensesapp.presentation.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,20 +16,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.button.setOnClickListener {
-            val result = expenseViewModel.fetchExpenses()
-            result.observe(this, {
-                when(it) {
-                    is RequestState.Success -> {
-                        it.data.forEach {
-                            Log.e("tag", "EXPENSE ${it.title}")
-                        }
-                    }
-                    is RequestState.Error -> {
-                        Log.e("tag", it.exception.toString())
-                    }
-                }
-            })
-        }
     }
 }

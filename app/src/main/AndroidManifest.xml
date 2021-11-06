@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExpensesApp">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.activities.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.AuthActivity"
+            android:name=".presentation.activities.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,4 +1,4 @@
-package com.example.expensesapp.presentation
+package com.example.expensesapp.presentation.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
