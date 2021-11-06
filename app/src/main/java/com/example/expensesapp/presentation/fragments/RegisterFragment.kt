@@ -5,6 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.allViews
+import androidx.core.view.forEach
+import com.example.domain.models.User
 import com.example.expensesapp.databinding.FragmentRegisterBinding
 import com.example.expensesapp.domain.UserViewModel
 import com.example.expensesapp.presentation.forms.RegisterForm
@@ -17,12 +20,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  * Use the [RegisterFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseAuthFragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding: FragmentRegisterBinding
         get() = _binding!!
 
-    val userViewModel: UserViewModel by viewModel()
+    private val userViewModel: UserViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,18 +50,20 @@ class RegisterFragment : Fragment() {
             }
             val result = userViewModel.register(form.email, form.password)
             result.observe(viewLifecycleOwner, {
-                when(it) {
-                    is RequestState.Loading -> {
-                        displaySnack("Loading")
-                    }
-                    is RequestState.Error -> {
-                        displaySnack("Error: ${it.exception}")
-                    }
-                    is RequestState.Success -> {
-                        displaySnack("Success")
-                    }
-                }
+                handleRequestState(it)
             })
+        }
+    }
+
+    override fun toggleLoadingFragment(isActive: Boolean) {
+        requireActivity().runOnUiThread {
+            binding.loadingFragment.root.visibility = if (isActive) View.VISIBLE else View.GONE
+            binding.loadingFragment.root.forEach {
+                it.visibility = if (isActive) View.VISIBLE else View.GONE
+            }
+            binding.root.allViews.forEach {
+                it.isEnabled = isActive.not()
+            }
         }
     }
 
@@ -70,6 +75,6 @@ class RegisterFragment : Fragment() {
          * @return A new instance of fragment RegisterFragment.
          */
         @JvmStatic
-        fun newInstance(param1: String, param2: String) = RegisterFragment()
+        fun newInstance() = RegisterFragment()
     }
 }

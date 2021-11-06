@@ -23,7 +23,7 @@ import java.lang.Exception
  * Use the [LoginFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment() {
+class LoginFragment : BaseAuthFragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding: FragmentLoginBinding
         get() = _binding!!
@@ -49,19 +49,8 @@ class LoginFragment : Fragment() {
             }
             val result = userViewModel.login(form.login, form.password)
             result.observe(viewLifecycleOwner, {
-                when(it) {
-                    is RequestState.Success -> onSuccess(it.data)
-                    is RequestState.Loading -> onLoading()
-                    is RequestState.Error -> onError(it.exception)
-                }
-            })
+                handleRequestState(it) })
         }
-        userViewModel.isAuthenticated.observe(viewLifecycleOwner, {
-            if (it != true) {
-                return@observe
-            }
-            displaySnack("you are authenticated")
-        })
     }
 
     override fun onDestroyView() {
@@ -69,25 +58,14 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    private fun onSuccess(user: User) {
-        toggleLoadingFragment(false)
-        displaySnack("Success, ${user.email}")
+    override fun onSuccess(user: User) {
+        super.onSuccess(user)
+
     }
 
-    private fun onLoading() {
-        toggleLoadingFragment(true)
-    }
-
-    private fun onError(err: Exception) {
-        toggleLoadingFragment(false)
-        val errorDialog = ErrorOccurredFragment.newInstance(err.message.toString())
-        val manager = requireActivity().supportFragmentManager
-        val transaction = manager.beginTransaction()
-        errorDialog.show(transaction, "dialog")
-    }
-
-    private fun toggleLoadingFragment(isActive: Boolean) {
+    override fun toggleLoadingFragment(isActive: Boolean) {
         requireActivity().runOnUiThread {
+            binding.loadingFragment.root.visibility = if (isActive) View.VISIBLE else View.GONE
             binding.loadingFragment.root.forEach {
                 it.visibility = if (isActive) View.VISIBLE else View.GONE
             }

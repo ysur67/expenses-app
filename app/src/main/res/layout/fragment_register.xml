@@ -30,12 +30,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
             android:ems="10"
+            android:hint="@string/login"
             android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            android:hint="@string/login"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <EditText
             android:id="@+id/editPassword"
@@ -43,12 +43,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:ems="10"
+            android:hint="@string/password"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editEmail"
-            android:hint="@string/password" />
+            app:layout_constraintTop_toBottomOf="@+id/editEmail" />
 
         <EditText
             android:id="@+id/editPasswordRepeat"
@@ -56,23 +56,35 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:ems="10"
+            android:hint="@string/password_repeat"
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editPassword"
-            android:hint="@string/password_repeat"/>
+            app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
         <Button
             android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
-            android:text="@string/register"
             android:paddingHorizontal="50dp"
+            android:text="@string/register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <include
+            android:id="@+id/loadingFragment"
+            layout="@layout/fragment_loading"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="gone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
