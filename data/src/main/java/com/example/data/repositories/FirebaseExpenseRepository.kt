@@ -40,6 +40,7 @@ class FirebaseExpenseRepository : ExpenseRepository {
 
 fun QueryDocumentSnapshot.toModel() : Expense {
     return Expense(
+        id = getString("id")!!,
         title = getString("title")!!,
         date = getTimestamp("date")!!.toDate(),
         money = getDouble("money")!!.toFloat()
