@@ -1,4 +1,4 @@
-package com.example.expensesapp.presentation.fragments
+package com.example.expensesapp.presentation.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
