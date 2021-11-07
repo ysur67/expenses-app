@@ -15,6 +15,8 @@ class ExpenseViewModel(
     private val getExpensesUseCase: GetExpensesUseCase,
     private val createExpenseUseCase: CreateExpenseUseCase
 ) : ViewModel() {
+    private val _expenses: MutableLiveData<ArrayList<Expense>> = MutableLiveData(ArrayList())
+    val expenses: LiveData<ArrayList<Expense>> = _expenses
 
     fun fetchExpenses() : LiveData<RequestState<List<Expense>>> {
         val requestState = MutableLiveData<RequestState<List<Expense>>>()
@@ -23,6 +25,7 @@ class ExpenseViewModel(
             when(val result = getExpensesUseCase.execute()) {
                 is Result.Success -> {
                     requestState.postValue(RequestState.Success(result.data))
+                    _expenses.postValue(result.data as ArrayList<Expense>)
                 }
                 is Result.Error -> {
                     requestState.postValue(RequestState.Error(result.exception))

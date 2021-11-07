@@ -21,8 +21,7 @@ class ExpensesAdapter(private val dataSet: Array<Expense>) :
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-//            .inflate(R.layout.text_row_item, viewGroup, false)
-
+            .inflate(R.layout.fragment_item, viewGroup, false)
         return ViewHolder(view)
     }
 

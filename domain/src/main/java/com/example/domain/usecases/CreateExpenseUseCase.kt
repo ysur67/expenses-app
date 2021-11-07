@@ -10,6 +10,7 @@ class CreateExpenseUseCase(
 ) {
     suspend fun execute(params: CreateExpenseParam) : Result<Boolean> {
         return repo.createExpense(Expense(
+            id = params.title,
             title = params.title,
             date = params.date,
             money = params.money
